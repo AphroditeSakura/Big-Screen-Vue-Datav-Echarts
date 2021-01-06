@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import echartMixins from "@/utils/resizeMixins";
+import echartsMixins from "@/utils/resizeMixins";
 
 export default {
   data() {
@@ -13,7 +13,7 @@ export default {
       chart: null,
     };
   },
-  mixins: [echartMixins],
+  mixins: [echartsMixins],
   mounted() {
     this.draw();
   },

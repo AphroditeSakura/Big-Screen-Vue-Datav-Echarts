@@ -9,11 +9,12 @@ export default {
       chart: null,
     };
   },
+  //
   created() {
     window.addEventListener('resize', this[resizeChartMethod], false);
   },
   beforeDestroy() {
-    window.removeEventListener('reisze', this[resizeChartMethod]);
+    window.removeEventListener('resize', this[resizeChartMethod]);
   },
   methods: {
     // 通过lodash的防抖函数来控制resize的频率

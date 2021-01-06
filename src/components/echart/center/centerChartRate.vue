@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div :id="id" style="margin:0 0 0 .285rem;width:1.5rem;height:1.25rem;"></div>
+    <div :id="id" class="chart-rate"></div>
   </div>
 </template>
 
@@ -108,4 +108,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .chart-rate{
+    width: 200px;
+    height: 200px;
+  }
 </style>

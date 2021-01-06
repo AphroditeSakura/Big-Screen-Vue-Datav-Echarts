@@ -1,124 +1,43 @@
 <template>
-  <div id="index">
+  <div id="index" >
     <dv-full-screen-container class="bg">
-      <dv-loading v-if="loading">Loading...</dv-loading>
-      <div v-else class="host-body">
-        <div class="d-flex jc-center">
-          <dv-decoration-10 style="width:33.3%;height:.0625rem;" />
-          <div class="d-flex jc-center">
-            <dv-decoration-8 :color="['#568aea', '#000000']" style="width:2.5rem;height:.625rem;" />
-            <div class="title">
-              <span class="title-text">大数据可视化平台</span>
-              <dv-decoration-6
-                class="title-bototm"
-                :reverse="true"
-                :color="['#50e3c2', '#67a1e5']"
-                style="width:3.125rem;height:.1rem;"
-              />
-            </div>
-            <dv-decoration-8
-              :reverse="true"
-              :color="['#568aea', '#000000']"
-              style="width:2.5rem;height:.625rem;"
-            />
-          </div>
-          <dv-decoration-10 style="width:33.3%;height:.0625rem; transform: rotateY(180deg);" />
+    <div class="box-container">
+        <div class="box-flex">
+            <dv-decoration10 style="width:40%;height:.0625rem;" />
+            <dv-decoration-10 style="width:40%; height:.0625rem;transform: rotateY(180deg);"/>
         </div>
-
-        <!-- 第二行 -->
-        <div class="d-flex jc-between px-2">
-          <div class="d-flex" style="width: 40%">
-            <div
-              class="react-right ml-4"
-              style="width: 6.25rem; text-align: left;background-color: #0f1325;"
-            >
-              <span class="react-before"></span>
-              <span class="text">政务大屏</span>
-            </div>
-            <div class="react-right ml-3" style="background-color: #0f1325;">
-              <span class="text colorBlue">数据分析</span>
-            </div>
-          </div>
-          <div style="width: 40%" class="d-flex">
-            <div class="react-left bg-color-blue mr-3">
-              <span class="text fw-b">xx届xx次</span>
-            </div>
-            <div
-              class="react-left mr-4"
-              style="width: 6.25rem; background-color: #0f1325; text-align: right;"
-            >
-              <span class="react-after"></span>
-              <span class="text">{{currtime}}</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="body-box">
-          <!-- 第三行数据 -->
-          <div class="content-box">
-            <div>
-              <dv-border-box-12>
-                <centerLeft1 />
-              </dv-border-box-12>
-            </div>
-            <div>
-              <dv-border-box-12>
-                <centerLeft2 />
-              </dv-border-box-12>
-            </div>
-            <!-- 中间 -->
-            <div>
-              <center />
-            </div>
-            <!-- 中间 -->
-            <div>
-              <centerRight2 />
-            </div>
-            <div>
-              <dv-border-box-13>
-                <centerRight1 />
-              </dv-border-box-13>
-            </div>
-          </div>
-
-          <!-- 第四行数据 -->
-          <div class="bototm-box">
-            <dv-border-box-13>
+       <div class="box-flex-dir">
+           <span class="title">能源管理平台</span>
+       </div>
+       <div class="decoration-5">
+           <dv-decoration-5 style="width:30%;height:20px;dur:10;" />
+       </div >
+      <div class="two-box" >
+          <dv-border-box-10  class="box-10" >
+              <BaseLoadAChart/>
+          </dv-border-box-10 >
+          <dv-border-box-10 class="box-10">
               <bottomLeft />
-            </dv-border-box-13>
-            <dv-border-box-12>
-              <bottomRight />
-            </dv-border-box-12>
-          </div>
-        </div>
+          </dv-border-box-10>
       </div>
+    </div>
     </dv-full-screen-container>
   </div>
 </template>
 
 <script>
-import centerLeft1 from "./centerLeft1";
-import centerLeft2 from "./centerLeft2";
-import centerRight1 from "./centerRight1";
-import centerRight2 from "./centerRight2";
-import center from "./center";
-import bottomLeft from "./bottomLeft";
-import bottomRight from "./bottomRight";
+  import BaseLoadAChart from "../components/echart/bottom/BaseLoadAChart";
+  import bottomLeft from "./bottomLeft";
+
 export default {
   data() {
     return {
       loading: true,
-      currtime: "",
     };
   },
   components: {
-    centerLeft1,
-    centerLeft2,
-    centerRight1,
-    centerRight2,
-    center,
-    bottomLeft,
-    bottomRight,
+      BaseLoadAChart,
+      bottomLeft
   },
   mounted() {
     this.cancelLoading();
@@ -126,6 +45,22 @@ export default {
     this.currentTime();
   },
   methods: {
+      // eslint-disable-next-line no-unused-vars
+      rollSize:function(refName){
+              /* 获取当前页面的缩放比
+                    若未设置zoom缩放比，则为默认100%，即1，原图大小
+                */
+          var zoom = parseInt(this.$refs.refName.style.zoom) || 100;
+              /* event.wheelDelta 获取滚轮滚动值并将滚动值叠加给缩放比zoom
+                    wheelDelta统一为±120，其中正数表示为向上滚动，负数表示向下滚动
+                */
+          zoom += event.wheelDelta / 12;
+              /* 最小范围 和 最大范围 的图片缩放尺度 */
+          if (zoom >= 100 && zoom <250) {
+              this.$refs.refName.style.zoom = zoom + "%";
+          }
+          return false;
+      },
     getTime: function () {
       var _this = this;
       let yy = new Date().getFullYear();
@@ -155,5 +90,39 @@ export default {
 </script>
 
 <style lang="scss">
+    .two-box{
+        display: flex;
+        justify-content:space-between;
+        height: 40%;
+    }
+
+    .decoration-5{
+        display: flex;
+        justify-content: center;
+    }
+    .title{
+        margin: 4px;
+        font-size: 20px;
+        text-align: center;
+    }
+    .box-container{
+        width: 100%;
+        height: 100%;
+    }
+    .box-flex{
+        display: flex;
+        justify-content:space-between;
+    }
+    .box-flex-dir{
+        margin: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .box-10{
+        width: 45%;
+        height:100%;
+        margin: 5px;
+    }
 @import "../assets/scss/index.scss";
 </style>
